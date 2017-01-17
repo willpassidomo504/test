@@ -1,0 +1,124 @@
+<html lang="en" ng-app="DashboardCtrl">
+
+<div layout="row">
+    <div flex="70" layout="column" flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Users</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+        <md-list flex>
+            <md-list-item class="md-3-line" ng-repeat="item in users">
+                <!--<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />-->
+                <div flex class="md-list-item-text" layout="row" ng-click="vm.SetUserId(item._id)">
+                    <div flex layout="column">
+                        <h3>{{ item.name }}</h3>
+                        <h4>{{ item._id }}</h4>
+                        <p>{{ item.dateCreated }}</p>
+                        <p>Admin - {{item.isAdmin}}</p>
+                        <p>Beacons: {{item.beaconCount}}</p>
+                        <br>
+                    </div>
+                </div>
+                <div layout-align="center center" layout-wrap>>
+                    <md-button class="md-raised md-warn" ng-click="showConfirm($event, 'user', item._id)" >Delete</md-button>
+                </div>
+
+            </md-list-item>
+        </md-list>
+        </md-content>
+    </div>
+
+    <div layout="column" flex>
+        <h3>Add New User</h3>
+        <form name="form" ng-submit="vm.NewUser()" role="form">
+            <div >
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
+            </div>
+            <div >
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required/>
+            </div>
+            <div>
+                <label for="admin">Admin?</label>
+                <input type="checkbox" name="admin" id="admin" class="md-secondary" ng-model="vm.isAdmin" ng-checked="false"/>
+
+            </div>
+            <div class="form-actions">
+                <button type="submit" ng-disabled="vm.dataLoading" class="btn btn-primary">Add User</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <!--<a href="#!/register" class="btn btn-link">Register</a>-->
+            </div>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+<div layout="row">
+    <div flex="70" layout="column" flex>
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Beacons</span>
+            </div>
+        </md-toolbar>
+        <md-content>
+            <md-list flex>
+                <md-list-item class="md-3-line" ng-repeat="item in beacons" ng-click="null">
+                    <!--<img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" />-->
+                    <div flex class="md-list-item-text" layout="row">
+                        <div flex layout="column">
+                            <h3>UserId: {{ item.userId }}</h3>
+                            <h4>Internal Name: {{ item.internalName }}</h4>
+                            <p>Date Created: {{ item.dateCreated }}</p>
+                            <p>Broadcast Id {{item.internalId}}</p>
+                            <p>Id: {{item._id}}</p>
+                        </div>
+                    </div>
+
+                    <div layout-align="center center" layout-wrap>>
+                        <md-button class="md-raised md-warn" ng-click="showConfirm($event, 'beacon', item._id)" >Delete</md-button>
+                    </div>
+
+                </md-list-item>
+            </md-list>
+        </md-content>
+
+        </div>
+
+    <div layout="column" flex>
+        <h3>Add New Beacon</h3>
+        <form name="form" ng-submit="vm.NewBeacon()" role="form">
+            <div >
+                <label for="username">User Id</label>
+                <input type="text" name="username" id="userId" class="form-control" ng-model="vm.userId" required />
+            </div>
+            <div >
+                <label for="username">Beacon Name</label>
+                <input type="text" name="username" id="beaconName" class="form-control" ng-model="vm.beaconName" required />
+            </div>
+            <div >
+                <label for="password">Beacon Id</label>
+                <input type="text" name="password" id="beaconId" class="form-control" ng-model="vm.beaconId" required/>
+            </div>
+            <div class="form-actions">
+                <button type="submit" ng-disabled="vm.beaconDataLoading" class="btn btn-primary">Add Beacon</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <!--<a href="#!/register" class="btn btn-link">Register</a>-->
+            </div>
+
+        </form>
+
+    </div>
+
+    </div>
+
+</div>
+
+</html>
+
